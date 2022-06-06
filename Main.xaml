@@ -123,21 +123,69 @@
             </sap:WorkflowViewStateService.ViewState>
             <If Condition="[not String.IsNullOrEmpty(row.item(&quot;hybrid_def&quot;).ToString)]" DisplayName="If hybrid_def field is empty" sap:VirtualizedContainerService.HintSize="484,258" sap2010:WorkflowViewState.IdRef="If_1">
               <If.Then>
-                <Sequence DisplayName="Sequence for non-empty field" sap:VirtualizedContainerService.HintSize="242,252" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                <Sequence DisplayName="Sequence for non-empty field" sap:VirtualizedContainerService.HintSize="242,452" sap2010:WorkflowViewState.IdRef="Sequence_7">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <Sequence DisplayName="Sequence - Several IFs" sap:VirtualizedContainerService.HintSize="242,420" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="[row.item(&quot;letter_pair&quot;).ToString + &quot;  &quot; + row.item(&quot;hybrid_def&quot;).ToString]" />
+                  <Sequence DisplayName="Sequence - clean up data" sap:VirtualizedContainerService.HintSize="200,68" sap2010:WorkflowViewState.IdRef="Sequence_22">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <If Condition="[(row.item(&quot;hybrid_def&quot;).ToString.Split({&quot;=&quot;}, StringSplitOptions.None).Length - 1)=2 and not (row.item(&quot;hybrid_def&quot;).ToString.Split({&quot;;&quot;}, StringSplitOptions.None).Length - 1)=1]" DisplayName="If exist two &quot;=&quot; and NOT one &quot;;&quot;" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="If_2">
+                    <Assign DisplayName="Assign - Trim" sap:VirtualizedContainerService.HintSize="262,64" sap2010:WorkflowViewState.IdRef="Assign_5">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Object">[row.item("hybrid_def")]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Object">[row.item("hybrid_def").ToString.Trim]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="Assign - remove double spaces" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Object">[row.item("hybrid_def")]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Object" xml:space="preserve">[row.item("hybrid_def").ToString.Replace ("  ", " ")]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="Assign - remove double spaces" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Object">[row.item("hybrid_def")]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Object" xml:space="preserve">[row.item("hybrid_def").ToString.Replace ("  ", " ")]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="Assign - fix  &quot;  =&quot;" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Object">[row.item("hybrid_def")]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Object">[row.item("hybrid_def").ToString.Replace (" =", "=")]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="Assign - fix  &quot;=  &quot;" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Object">[row.item("hybrid_def")]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Object">[row.item("hybrid_def").ToString.Replace ("= ", "=")]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                  <Sequence DisplayName="Sequence - Several IFs" sap:VirtualizedContainerService.HintSize="200,68" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If Condition="[(row.item(&quot;hybrid_def&quot;).ToString.Split({&quot;=&quot;}, StringSplitOptions.None).Length - 1)=2 and not (row.item(&quot;hybrid_def&quot;).ToString.Split({&quot;;&quot;}, StringSplitOptions.None).Length - 1)=1]" DisplayName="If exist two &quot;=&quot; and NOT one &quot;;&quot;" sap:VirtualizedContainerService.HintSize="484,258" sap2010:WorkflowViewState.IdRef="If_2">
                       <If.Then>
-                        <Sequence sap:VirtualizedContainerService.HintSize="304,244" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                        <Sequence sap:VirtualizedContainerService.HintSize="200,68" sap2010:WorkflowViewState.IdRef="Sequence_11">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -193,7 +241,7 @@
                         </Sequence>
                       </If.Else>
                     </If>
-                    <If Condition="[not row.item(&quot;hybrid_def&quot;).ToString.Trim.Substring(0, row.item(&quot;hybrid_def&quot;).ToString.Trim.IndexOf(&quot;=&quot;))=row.item(&quot;verbX&quot;).ToString and not row.item(&quot;hybrid_def&quot;).ToString.Trim.Substring(0, row.item(&quot;hybrid_def&quot;).ToString.Trim.IndexOf(&quot;=&quot;))=row.item(&quot;objectX&quot;).ToString]" DisplayName="If exist mo" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="If_4">
+                    <If Condition="[not row.item(&quot;hybrid_def&quot;).ToString.Trim.Substring(0, row.item(&quot;hybrid_def&quot;).ToString.Trim.IndexOf(&quot;=&quot;))=row.item(&quot;verbX&quot;).ToString and not row.item(&quot;hybrid_def&quot;).ToString.Trim.Substring(0, row.item(&quot;hybrid_def&quot;).ToString.Trim.IndexOf(&quot;=&quot;))=row.item(&quot;objectX&quot;).ToString]" DisplayName="If first word in hybrid_def doesn't match either the verb or the object" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="If_4">
                       <If.Then>
                         <Sequence sap:VirtualizedContainerService.HintSize="200,68" sap2010:WorkflowViewState.IdRef="Sequence_16">
                           <sap:WorkflowViewStateService.ViewState>
@@ -222,7 +270,7 @@
                         </Sequence>
                       </If.Else>
                     </If>
-                    <ui:CommentOut DisplayName="Comment Out" sap2010:WorkflowViewState.IdRef="CommentOut_7">
+                    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="CommentOut_7">
                       <ui:CommentOut.Body>
                         <Sequence DisplayName="Ignored Activities" sap2010:WorkflowViewState.IdRef="Sequence_21">
                           <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;first word in hybrid def: &quot; + row.item(&quot;hybrid_def&quot;).ToString.Trim.Substring(0, row.item(&quot;hybrid_def&quot;).ToString.Trim.IndexOf(&quot;=&quot;))]" />
@@ -230,13 +278,7 @@
                       </ui:CommentOut.Body>
                     </ui:CommentOut>
                   </Sequence>
-                  <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="CommentOut_3">
-                    <ui:CommentOut.Body>
-                      <Sequence DisplayName="Ignored Activities" sap2010:WorkflowViewState.IdRef="Sequence_13">
-                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,93" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[row.item(&quot;letter_pair&quot;).ToString + &quot;  &quot; + row.item(&quot;hybrid_def&quot;).ToString]" />
-                      </Sequence>
-                    </ui:CommentOut.Body>
-                  </ui:CommentOut>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[row.item(&quot;letter_pair&quot;).ToString + &quot;  &quot; + row.item(&quot;hybrid_def&quot;).ToString]" />
                 </Sequence>
               </If.Then>
               <If.Else>
